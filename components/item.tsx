@@ -23,26 +23,10 @@ export default function Item({details, setItems}: {details: ItemType, setItems: 
         localStorage.setItem("items",JSON.stringify(newItems))
     }
 
-    function deleteItem(){
-      let itemsCache = localStorage.getItem("items")
-      let itemsJson
-      if (itemsCache){
-        itemsJson = JSON.parse(itemsCache)
-      } else{
-        itemsJson = []
-      }
-
-      let listWithoutItem = itemsJson.filter((item: any)=>{return item.id !== details.id})
-
-      setItems(listWithoutItem)
-      localStorage.setItem("items",JSON.stringify(listWithoutItem))
-    }
-
     return (
     <div className="flex flex-row gap-2">
         <input type="checkbox" id={`checkbox_${details.id}`} checked={details.checked} onChange={handleCheck} />
         <label htmlFor={`checkbox_${details.id}`}>{details.content}</label>
-        <button className="bg-red-500 ml-auto px-3" onClick={deleteItem}>-</button>
     </div>)
 
 
