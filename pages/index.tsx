@@ -43,9 +43,9 @@ export default function Home() {
   return (
     <div className="flex w-full">
       <div className="flex flex-col mx-auto mt-10">
-          <h1 className="text-4xl mb-5">To-Do List</h1>
+          <h1 className="text-4xl mb-5 text-center">To-Do List</h1>
           <div className="flex flex-col gap-1">
-            <form onSubmit={handleAdd}>
+            <form onSubmit={handleAdd} className="mx-auto">
               <input type="text" className="text-black" id="input_field" name="input_field" autoComplete="off"/>
               <button className="bg-green-500 px-3 mx-2 mb-5" type="submit">+</button>
             </form>
