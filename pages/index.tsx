@@ -1,7 +1,7 @@
 import Item from "@/components/item";
 import { randomUUID } from "crypto";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export type ItemType = {
@@ -13,7 +13,6 @@ export type ItemType = {
 
 export default function Home() {
   const [items, setItems] = useState<ItemType[]>([])
-  const [inputField, setInputField] = useState<string>("")
 
   useEffect(()=>{
     console.log("loaded")
@@ -28,15 +27,16 @@ export default function Home() {
     setItems(itemsJson)
   }, [])
 
-  function handleAdd(){
-    if(inputField === ""){
+  function handleAdd(e: FormEvent<HTMLFormElement>){
+    e.preventDefault()
+    if(e.currentTarget.input_field.value === ""){
       alert("You did not put any text in")
     }
     else{
-      let newItems = [{content: inputField, checked: false, id: uuidv4().toString()}, ...items]
+      let newItems = [{content: e.currentTarget.input_field.value, checked: false, id: uuidv4().toString()}, ...items]
       setItems(newItems)
       localStorage.setItem("items",JSON.stringify(newItems))
-      setInputField("")
+      e.currentTarget.input_field.value = ""
     }
   }
 
@@ -45,10 +45,10 @@ export default function Home() {
       <div className="flex flex-col mx-auto mt-10">
           <h1 className="text-4xl mb-5">To-Do List</h1>
           <div className="flex flex-col gap-1">
-            <div>
-              <input type="text" className="text-black" value={inputField} onChange={(e)=>{setInputField(e.currentTarget.value)}}/>
-              <button className="bg-green-500 px-3 mx-2 mb-5" onClick={handleAdd}>+</button>
-            </div>
+            <form onSubmit={handleAdd}>
+              <input type="text" className="text-black" id="input_field" name="input_field" autoComplete="off"/>
+              <button className="bg-green-500 px-3 mx-2 mb-5" type="submit">+</button>
+            </form>
             {items.map((details)=>{
               return <Item setItems={setItems} details={details}/>
             })}
