@@ -1,11 +1,13 @@
 import Item from "@/components/item";
+import { randomUUID } from "crypto";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export type ItemType = {
   content: string
   checked: boolean
-  id: number
+  id: string
 }
 
 
@@ -31,7 +33,7 @@ export default function Home() {
       alert("You did not put any text in")
     }
     else{
-      let newItems = [...items,{content: inputField, checked: false, id: items.length + 1}]
+      let newItems = [...items,{content: inputField, checked: false, id: uuidv4().toString()}]
       setItems(newItems)
       localStorage.setItem("items",JSON.stringify(newItems))
       setInputField("")
@@ -47,8 +49,8 @@ export default function Home() {
               <input type="text" className="text-black" value={inputField} onChange={(e)=>{setInputField(e.currentTarget.value)}}/>
               <button className="bg-green-500 px-3 mx-2 mb-5" onClick={handleAdd}>+</button>
             </div>
-            {items.map((item)=>{
-              return <Item setItems={setItems} details={item}/>
+            {items.map((details)=>{
+              return <Item setItems={setItems} details={details}/>
             })}
           </div>
       </div>
