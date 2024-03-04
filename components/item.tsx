@@ -19,8 +19,18 @@ export default function Item({details, setItems}: {details: ItemType, setItems: 
         console.log("item", item)
 
         let newItems = [...listWithoutItem, item]
-        setItems(newItems)
-        localStorage.setItem("items",JSON.stringify(newItems))
+        // Putting checked items at the end
+        let sortedItems: ItemType[] = [];
+        newItems.map((i)=>{
+          if(i.checked){
+            sortedItems.push(i)
+          }
+          else{
+            sortedItems.unshift(i)
+          }
+        })
+        setItems(sortedItems)
+        localStorage.setItem("items",JSON.stringify(sortedItems))
     }
 
     function deleteItem(){

@@ -33,7 +33,7 @@ export default function Home() {
       alert("You did not put any text in")
     }
     else{
-      let newItems = [...items,{content: inputField, checked: false, id: uuidv4().toString()}]
+      let newItems = [{content: inputField, checked: false, id: uuidv4().toString()}, ...items]
       setItems(newItems)
       localStorage.setItem("items",JSON.stringify(newItems))
       setInputField("")
