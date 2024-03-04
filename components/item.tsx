@@ -52,7 +52,7 @@ export default function Item({details, setItems}: {details: ItemType, setItems: 
     <div className="flex flex-row gap-2">
         <input type="checkbox" id={`checkbox_${details.id}`} checked={details.checked} onChange={handleCheck} />
         <label htmlFor={`checkbox_${details.id}`}>{details.content}</label>
-        <button className="bg-red-500 ml-auto px-3" onClick={deleteItem}>-</button>
+        { details.checked ? <button className="bg-red-500 ml-auto px-3" onClick={deleteItem}>-</button>: ""}
     </div>)
 
 
